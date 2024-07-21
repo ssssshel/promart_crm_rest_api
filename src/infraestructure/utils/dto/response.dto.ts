@@ -1,0 +1,9 @@
+export class ResponseDto {
+  success: boolean
+
+  message?: string
+
+  data?: any
+
+  statusCode?: number
+}
