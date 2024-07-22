@@ -20,4 +20,40 @@ export class Role extends Model {
     type: DataType.STRING,
   })
   description?: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false
+  })
+  p_unlock_client: boolean;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false
+  })
+  p_modify_client_status: boolean;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false
+  })
+  p_create_client: boolean;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false
+  })
+  p_delete_client: boolean;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false
+  })
+  p_update_client: boolean;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false
+  })
+  p_view_client: boolean;
 }

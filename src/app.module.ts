@@ -11,6 +11,11 @@ import { UserStatus } from './model/user-status.model';
 import { Status } from './model/status.model';
 import { Role } from './model/role.model';
 import { sequelizeProvider } from './infraestructure/configuration/sequelize-provider/sequelize-provider';
+import { AuthController } from './controller/auth/auth.controller';
+import { AuthService } from './service/auth/auth.service';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './infraestructure/auth/jwt.strategy';
 
 
 @Module({
@@ -30,9 +35,14 @@ import { sequelizeProvider } from './infraestructure/configuration/sequelize-pro
       models: [User, UserStatus, Role, Status],
 
     }),
-    SequelizeModule.forFeature([User, UserStatus, Role, Status])
+    SequelizeModule.forFeature([User, UserStatus, Role, Status]),
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.AUTH_SECRET,
+      signOptions: { expiresIn: '15m' }
+    })
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, EnvConfigProvider, UserService, sequelizeProvider],
+  controllers: [AppController, UserController, AuthController],
+  providers: [AppService, EnvConfigProvider, UserService, sequelizeProvider, AuthService, JwtStrategy],
 })
 export class AppModule { }

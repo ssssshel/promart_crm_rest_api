@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
-import { UniqueConstraintError } from 'sequelize';
-import { ChangeUserStatusDto } from 'src/infraestructure/utils/dto/change-user-status.dto';
-import { CreateUserDto } from 'src/infraestructure/utils/dto/create-user.dto';
-import { ResponseDto } from 'src/infraestructure/utils/dto/response.dto';
-import { UpdateUserDto } from 'src/infraestructure/utils/dto/update-user.dto';
+import { ChangeUserStatusDto } from 'src/controller/user/dto/change-user-status.dto';
+import { CreateUserDto } from 'src/controller/user/dto/create-user.dto';
+import { ResponseDto } from 'src/controller/user/dto/response.dto';
+import { UpdateUserDto } from 'src/controller/user/dto/update-user.dto';
+import { JwtAuthGuard } from 'src/infraestructure/guard/jwt-auth.guard';
+import { JwtPayload } from 'src/infraestructure/utils/interfaces';
 import { UserService } from 'src/service/user/user.service';
 
 @Controller('api/v1/users')
@@ -12,124 +13,115 @@ export class UserController {
 
   constructor(private userService: UserService) { }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @Res() res: Response): Promise<Response<ResponseDto>> {
-    try {
-      const user = await this.userService.create(createUserDto);
-      return res.status(201).json({
-        success: true,
-        data: user,
-        statusCode: 201,
-        message: 'User created successfully',
-      })
-    } catch (error) {
-      if (error instanceof UniqueConstraintError) {
-        return res.status(400).json({
-          success: false,
-          statusCode: 400,
-          message: error.errors[0].message
-        })
-      }
+  async create(@Req() req, @Body() createUserDto: CreateUserDto, @Res() res: Response): Promise<Response<ResponseDto>> {
+    const { role_id }: JwtPayload = req.user
+    const user = await this.userService.create(createUserDto, role_id)
+    return res.status(201).json({
+      success: true,
+      data: user,
+      statusCode: 201,
+      message: 'User created successfully',
+    })
 
-      return res.status(500).json({
-        success: false,
-        statusCode: 500,
-        message: error
-      })
-    }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findById(@Param('id') id: number): Promise<ResponseDto> {
-    try {
-      const user = await this.userService.findById(id);
-      return {
-        success: true,
-        data: user,
-        statusCode: 200,
-        message: 'User retrieved successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        statusCode: error.getStatus?.() || 400,
-        message: error.message
-      }
+  async findById(@Req() req, @Param('id') id: number, @Res() res: Response): Promise<Response<ResponseDto>> {
+    if (isNaN(id)) {
+      throw new BadRequestException(`Invalid id parameter =>  ${id}`);
     }
+
+    const { role_id }: JwtPayload = req.user
+
+    const user = await this.userService.findById(id, role_id);
+    return res.status(200).json({
+      success: true,
+      data: user,
+      statusCode: 200,
+      message: 'User retrieved successfully',
+    })
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(@Query('page') page: number, @Query('limit') limit: number): Promise<ResponseDto> {
-    try {
-      const result = await this.userService.findAll(page, limit);
-      return {
-        success: true,
-        data: result.data,
-        statusCode: 200,
-        message: 'Users retrieved successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        statusCode: error.getStatus?.() || 400,
-        message: error.message
-      }
+  async findAll(@Req() req, @Query('limit') limit: number, @Query('page') page: number, @Res() res: Response): Promise<Response<ResponseDto>> {
+    ;
+
+    if (isNaN(page) || page < 1) {
+      throw new BadRequestException(`Invalid page parameter =>  ${page}`);
     }
+    if (isNaN(limit) || limit < 1) {
+      throw new BadRequestException(`Invalid limit parameter => ${limit}`);
+    }
+
+    const { role_id }: JwtPayload = req.user
+
+    const result = await this.userService.findAll(page, limit, role_id)
+    return res.status(200).json({
+      success: true,
+      data: result,
+      statusCode: 200,
+      message: 'Users retrieved successfully'
+    })
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<ResponseDto> {
-    try {
-      const user = await this.userService.update(id, updateUserDto);
-      return {
-        success: true,
-        data: user,
-        statusCode: 200,
-        message: 'User updated successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        statusCode: error.getStatus?.() || 400,
-        message: error.message
-      }
+  async update(@Req() req, @Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Res() res: Response): Promise<Response<ResponseDto>> {
+    if (isNaN(id)) {
+      throw new BadRequestException(`Invalid id parameter =>  ${id}`);
     }
+    if (!Object.keys(updateUserDto).length) {
+      throw new BadRequestException(`Empty payload =>  ${JSON.stringify(updateUserDto)}`);
+    }
+
+    const { role_id }: JwtPayload = req.user
+
+    const user = await this.userService.update(id, updateUserDto, role_id)
+    return res.status(200).json({
+      success: true,
+      data: user,
+      statusCode: 200,
+      message: 'User updated successfully',
+    })
+
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<ResponseDto> {
-    try {
-      await this.userService.delete(id);
-      return {
-        success: true,
-        statusCode: 200,
-        message: 'User deleted successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        statusCode: error.getStatus?.() || 400,
-        message: error.message
-      }
+  async remove(@Req() req, @Param('id') id: number, @Res() res: Response): Promise<Response<ResponseDto>> {
+    if (isNaN(id)) {
+      throw new BadRequestException(`Invalid id parameter =>  ${id}`);
     }
+
+    const { role_id }: JwtPayload = req.user
+
+    await this.userService.delete(id, role_id)
+    return res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: 'User deleted successfully',
+    })
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post(':id/status')
-  async changeStatus(@Param('id') id: number, @Body() changeUserStatusDto: ChangeUserStatusDto): Promise<ResponseDto> {
-    try {
-      const userStatus = await this.userService.changeStatus(id, changeUserStatusDto);
-      return {
-        success: true,
-        data: userStatus,
-        statusCode: 200,
-        message: 'User status changed successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        statusCode: error.getStatus?.() || 400,
-        message: error.message
-      }
+  async changeStatus(@Req() req, @Param('id') id: number, @Body() changeUserStatusDto: ChangeUserStatusDto, @Res() res: Response): Promise<Response<ResponseDto>> {
+    if (isNaN(id)) {
+      throw new BadRequestException(`Invalid id parameter =>  ${id}`);
     }
+
+    const { role_id }: JwtPayload = req.user
+    const userStatus = await this.userService.changeStatus(id, changeUserStatusDto, role_id);
+    return res.status(200).json({
+      success: true,
+      data: userStatus,
+      statusCode: 200,
+      message: 'User status changed successfully',
+    })
+
   }
 }

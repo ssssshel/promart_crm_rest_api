@@ -21,10 +21,10 @@ export class UpdateUserDto {
   @Length(1, 255)
   email?: string;
 
-  @IsString()
-  @IsOptional()
-  @Length(8, 255)
-  password_hash?: string;
+  // @IsString()
+  // @IsOptional()
+  // @Length(8, 255)
+  // password_hash?: string;
 
   @IsInt()
   @IsOptional()

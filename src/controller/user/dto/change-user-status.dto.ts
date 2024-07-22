@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsInt, IsNotEmpty } from 'class-validator';
 
 export class ChangeUserStatusDto {
   @IsInt()
@@ -6,6 +6,6 @@ export class ChangeUserStatusDto {
   status_id: number;
 
   @IsInt()
-  @IsOptional()
+  @IsNotEmpty()
   user_id: number;
 }

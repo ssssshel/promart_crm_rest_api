@@ -14,7 +14,8 @@ export class UserStatus extends Model {
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false
+    allowNull: false,
+    unique: true
   })
   user_id: number;
 
@@ -22,6 +23,7 @@ export class UserStatus extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 1
   })
   current_status_id: number;
 

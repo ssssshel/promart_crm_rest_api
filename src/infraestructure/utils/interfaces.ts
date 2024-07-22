@@ -5,3 +5,9 @@ export interface EnvVariables {
   DB_HOST: string
   DB_PORT: string
 }
+
+export interface JwtPayload {
+  user_id: number,
+  username: string,
+  role_id: number
+}
