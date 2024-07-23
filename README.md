@@ -1,73 +1,183 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<body>
+  <h1>Documentación de la API de Usuario</h1>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+  <p>Esta API proporciona endpoints para gestionar usuarios en el sistema. Todos los endpoints están protegidos por autenticación JWT.</p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  <h2>Endpoints</h2>
 
-## Description
+  <h3>Crear Usuario</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/users</code></li>
+    <li><strong>Método</strong>: <code>POST</code></li>
+    <li><strong>Descripción</strong>: Crea un nuevo usuario.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Cuerpo de la Solicitud</strong>:</li>
+  </ul>
+  <pre><code>{
+  "first_name": "John",
+  "last_name": "Doe",
+  "middle_name": "A",
+  "email": "john.doe@example.com",
+  "role_id": 1
+}</code></pre>
+  <ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "middle_name": "A",
+    "email": "john.doe@example.com",
+    "role_id": 1
+  },
+  "statusCode": 201,
+  "message": "User created successfully"
+}</code></pre>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+  <h3>Obtener Usuario por ID</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/users/:id</code></li>
+    <li><strong>Método</strong>: <code>GET</code></li>
+    <li><strong>Descripción</strong>: Obtiene un usuario por su ID.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Parámetros</strong>:</li>
+    <ul>
+      <li><code>id</code> (número) - ID del usuario a obtener.</li>
+    </ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "middle_name": "A",
+    "email": "john.doe@example.com",
+    "role_id": 1
+  },
+  "statusCode": 200,
+  "message": "User retrieved successfully"
+}</code></pre>
 
-## Installation
+  <h3>Obtener Todos los Usuarios</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/users</code></li>
+    <li><strong>Método</strong>: <code>GET</code></li>
+    <li><strong>Descripción</strong>: Obtiene todos los usuarios con paginación.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Parámetros</strong>:</li>
+    <ul>
+      <li><code>limit</code> (número) - Cantidad de usuarios por página.</li>
+      <li><code>page</code> (número) - Número de página.</li>
+    </ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "users": [
+      {
+        "id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "middle_name": "A",
+        "email": "john.doe@example.com",
+        "role_id": 1
+      }
+    ],
+    "total": 1
+  },
+  "statusCode": 200,
+  "message": "Users retrieved successfully"
+}</code></pre>
 
-```bash
-$ pnpm install
-```
+  <h3>Actualizar Usuario</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/users/:id</code></li>
+    <li><strong>Método</strong>: <code>PATCH</code></li>
+    <li><strong>Descripción</strong>: Actualiza la información de un usuario.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Parámetros</strong>:</li>
+    <ul>
+      <li><code>id</code> (número) - ID del usuario a actualizar.</li>
+    </ul>
+    <li><strong>Cuerpo de la Solicitud</strong>:</li>
+  </ul>
+  <pre><code>{
+  "first_name": "John",
+  "last_name": "Doe",
+  "middle_name": "A",
+  "email": "john.doe@example.com",
+  "role_id": 1
+}</code></pre>
+  <ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "middle_name": "A",
+    "email": "john.doe@example.com",
+    "role_id": 1
+  },
+  "statusCode": 200,
+  "message": "User updated successfully"
+}</code></pre>
 
-## Running the app
+  <h3>Eliminar Usuario</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/users/:id</code></li>
+    <li><strong>Método</strong>: <code>DELETE</code></li>
+    <li><strong>Descripción</strong>: Elimina un usuario por su ID.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Parámetros</strong>:</li>
+    <ul>
+      <li><code>id</code> (número) - ID del usuario a eliminar.</li>
+    </ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "statusCode": 200,
+  "message": "User deleted successfully"
+}</code></pre>
 
-```bash
-# development
-$ pnpm run start
+  <h3>Cambiar Estado del Usuario</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/users/:id/status</code></li>
+    <li><strong>Método</strong>: <code>POST</code></li>
+    <li><strong>Descripción</strong>: Cambia el estado de un usuario.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Parámetros</strong>:</li>
+    <ul>
+      <li><code>id</code> (número) - ID del usuario.</li>
+    </ul>
+    <li><strong>Cuerpo de la Solicitud</strong>:</li>
+  </ul>
+  <pre><code>{
+  "status_id": 1
+}</code></pre>
+  <ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "id": 1,
+    "status": {
+      "id": 1,
+      "name": "Activo"
+    }
+  },
+  "statusCode": 200,
+  "message": "User status changed successfully"
+}</code></pre>
 
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+</body>
