@@ -17,8 +17,45 @@ AUTH_SECRET=
 
   <h2>Migración de la Base de Datos</h2>
   <p>La base de datos se migrará automáticamente al iniciar el servicio por primera vez. Asegúrate de estar conectado a una base de datos Postgres y tener configurado el archivo <code>.env</code> correctamente antes de iniciar el servicio.</p>
-  <p>Para el Data Definition Language (DDL), es necesario ejecutar el archivo <code>data/ddl.sql</code> en un gestor de base de datos.</p>
-
+  <p>Para el Data Definition Language (DDL), es necesario ejecutar el archivo <code>data/ddl.sql</code> en un gestor de base de datos, de tal forma que se nos cargara data basica para probar el proyecto</p>
+  <p>La data cargada por el DDL incluye usuarios con los que se puede iniciar sesión en el sitio web. Aquí tienes la información de los usuarios cargados:</p>
+<table>
+    <caption>Usuarios Cargados por el DDL</caption>
+    <thead>
+      <tr>
+        <th>Correo Electrónico</th>
+        <th>Rol</th>
+        <th>Contraseña</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>superadmin@example.com</td>
+        <td>Superadmin</td>
+        <td>password</td>
+      </tr>
+      <tr>
+        <td>admin@example.com</td>
+        <td>Admin</td>
+        <td>password</td>
+      </tr>
+      <tr>
+        <td>customer1@example.com</td>
+        <td>Customer</td>
+        <td>password</td>
+      </tr>
+      <tr>
+        <td>customer2@example.com</td>
+        <td>Customer</td>
+        <td>password/td>
+      </tr>
+      <tr>
+        <td>customer3@example.com</td>
+        <td>Customer</td>
+        <td>password</td>
+      </tr>
+    </tbody>
+  </table>
   <h2>Comandos Importantes</h2>
   <p>Estos son los comandos importantes que puedes usar durante el desarrollo y despliegue del proyecto:</p>
   <pre><code>
