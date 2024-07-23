@@ -52,17 +52,19 @@ export class UserService {
         throw new ForbiddenException('Forbidden access')
       }
 
-      const { email, first_name, last_name, password_hash, role_id, middle_name } = createUserDto
+      const { email, first_name, last_name, role_id, middle_name } = createUserDto
+
+      const psw = (first_name.slice(0, 2) + last_name.slice(1)).toLowerCase()
 
       const salt = await bcrypt.genSalt(7)
-      const hashPws = await bcrypt.hash(password_hash, salt)
+      const hashPsw = await bcrypt.hash(psw, salt)
 
       const user = await User.create({
         first_name,
         last_name,
         middle_name,
         email,
-        password_hash: hashPws,
+        password_hash: hashPsw,
         role_id
       })
 
