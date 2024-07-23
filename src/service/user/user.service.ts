@@ -143,6 +143,10 @@ export class UserService {
           is_deleted: false
         },
         attributes: ['id', 'first_name', 'last_name', 'middle_name', 'email', 'role_id'],
+        include: {
+          model: Role,
+          attributes: ['id', 'name']
+        }
       });
 
       if (!rows.length) {
