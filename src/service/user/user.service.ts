@@ -136,7 +136,6 @@ export class UserService {
         throw new ForbiddenException('Forbidden access')
       }
 
-      console.log('rrr => ', page, limit)
       const { count, rows } = await this.userModel.findAndCountAll({
         limit,
         offset: (page - 1) * limit,
