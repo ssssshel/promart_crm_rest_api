@@ -141,7 +141,8 @@ export class UserService {
         offset: (page - 1) * limit,
         where: {
           is_deleted: false
-        }
+        },
+        attributes: ['id', 'first_name', 'last_name', 'middle_name', 'email', 'role_id'],
       });
 
       if (!rows.length) {
