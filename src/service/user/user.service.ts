@@ -92,7 +92,7 @@ export class UserService {
    * @throws ForbiddenException if the role does not allow viewing clients.
    * @throws NotFoundException if the user is not found.
    */
-  async findById(id: number, roleId: number, includeRole: boolean = false) {
+  async findById(id: number, roleId: number, includeRole: boolean = true) {
     try {
       const role = await this.roleModel.findByPk(roleId)
       if (!role.p_view_client) {
