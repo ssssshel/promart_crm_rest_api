@@ -47,7 +47,7 @@ AUTH_SECRET=
       <tr>
         <td>customer2@example.com</td>
         <td>Customer</td>
-        <td>password/td>
+        <td>password</td>
       </tr>
       <tr>
         <td>customer3@example.com</td>
@@ -56,6 +56,55 @@ AUTH_SECRET=
       </tr>
     </tbody>
   </table>
+
+  <table class="permissions-table">
+    <caption>Permisos por Rol</caption>
+    <thead>
+      <tr>
+        <th>Rol</th>
+        <th>Descripción</th>
+        <th>Desbloquear Cliente</th>
+        <th>Modificar Estado del Cliente</th>
+        <th>Crear Cliente</th>
+        <th>Eliminar Cliente</th>
+        <th>Actualizar Cliente</th>
+        <th>Ver Cliente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>superadmin</td>
+        <td>Super administrador del sistema</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>admin</td>
+        <td>Administrador del sistema</td>
+        <td>false</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>customer</td>
+        <td>Cliente del sistema</td>
+        <td>false</td>
+        <td>false</td>
+        <td>false</td>
+        <td>false</td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+    </tbody>
+  </table>
+  
   <h2>Comandos Importantes</h2>
   <p>Estos son los comandos importantes que puedes usar durante el desarrollo y despliegue del proyecto:</p>
   <pre><code>
