@@ -54,7 +54,8 @@ export class UserService {
 
       const { email, first_name, last_name, role_id, middle_name } = createUserDto
 
-      const psw = (first_name.slice(0, 2) + last_name.slice(1) + '2024').toLowerCase()
+      const psw = (first_name.slice(0, 2) + last_name.slice(0) + '2024').toLowerCase()
+      console.log(psw)
 
       const salt = await bcrypt.genSalt(7)
       const hashPsw = await bcrypt.hash(psw, salt)
