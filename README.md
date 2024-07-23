@@ -1,5 +1,5 @@
 <body>
-  <h1>Documentación de la API de Usuario</h1>
+  <h1>Documentación de la API de CRM</h1>
 
   <p>Esta API proporciona endpoints para gestionar usuarios en el sistema. Todos los endpoints están protegidos por autenticación JWT.</p>
 
@@ -178,6 +178,55 @@
   },
   "statusCode": 200,
   "message": "User status changed successfully"
+}</code></pre>
+
+<h3>Obtener Estado de Usuario por ID</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/user-status/:id</code></li>
+    <li><strong>Método</strong>: <code>GET</code></li>
+    <li><strong>Descripción</strong>: Obtiene el estado de un usuario por su ID.</li>
+    <li><strong>Autenticación</strong>: Requerida (JWT)</li>
+    <li><strong>Parámetros</strong>:</li>
+    <ul>
+      <li><code>id</code> (número) - ID del usuario.</li>
+    </ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "id": 1,
+    "status": {
+      "id": 1,
+      "name": "Activo"
+    }
+  },
+  "statusCode": 200,
+  "message": "User status retrieved successfully"
+}</code></pre>
+
+  <h2>Endpoints de Autenticación</h2>
+
+  <h3>Inicio de Sesión</h3>
+  <ul>
+    <li><strong>URL</strong>: <code>/api/v1/auth/login</code></li>
+    <li><strong>Método</strong>: <code>POST</code></li>
+    <li><strong>Descripción</strong>: Inicia sesión y obtiene un token de acceso.</li>
+    <li><strong>Cuerpo de la Solicitud</strong>:</li>
+  </ul>
+  <pre><code>{
+  "email": "john.doe@example.com",
+  "password": "your_password"
+}</code></pre>
+  <ul>
+    <li><strong>Respuesta</strong>:</li>
+  </ul>
+  <pre><code>{
+  "success": true,
+  "data": {
+    "accessToken": "your_access_token"
+  },
+  "message": "Successfully login"
 }</code></pre>
 
 </body>
