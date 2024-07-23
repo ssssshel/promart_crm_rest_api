@@ -30,7 +30,7 @@ import { JwtStrategy } from './infraestructure/auth/jwt.strategy';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PSW,
       host: process.env.DB_HOST,
-      port: Number.parseInt(process.env.DB_PORT, 10),
+      port: Number.parseInt(process.env.DB_PORT, 30),
       logging: (msg) => Logger.log(msg, 'Sequelize'),
       models: [User, UserStatus, Role, Status],
 
