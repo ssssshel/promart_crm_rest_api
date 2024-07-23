@@ -1,9 +1,43 @@
 <body>
+  <h1>Documentación del Despliegue</h1>
+
+  <h2>Configuración del Entorno</h2>
+  <p>Asegúrate de definir las siguientes variables de entorno en tu archivo <code>.env</code>:</p>
+  <pre><code>
+DB_PSW=
+DB_USERNAME=
+DB_DATABASE=
+DB_HOST=
+DB_PORT=
+
+APP_PORT=3500
+
+AUTH_SECRET=
+</code></pre>
+
+  <h2>Migración de la Base de Datos</h2>
+  <p>La base de datos se migrará automáticamente al iniciar el servicio por primera vez. Asegúrate de estar conectado a una base de datos Postgres y tener configurado el archivo <code>.env</code> correctamente antes de iniciar el servicio.</p>
+  <p>Para el Data Definition Language (DDL), es necesario ejecutar el archivo <code>data/ddl.sql</code> en un gestor de base de datos.</p>
+
+  <h2>Comandos Importantes</h2>
+  <p>Estos son los comandos importantes que puedes usar durante el desarrollo y despliegue del proyecto:</p>
+  <pre><code>
+
+# Construir el proyecto
+
+npm run build
+
+# Iniciar el servidor en modo desarrollo
+
+npm run start:dev
+
+</code></pre>
+
   <h1>Documentación de la API de CRM</h1>
 
   <p>Esta API proporciona endpoints para gestionar usuarios en el sistema. Todos los endpoints están protegidos por autenticación JWT.</p>
 
-  <h2>Endpoints</h2>
+  <h2>Endpoints de Usuario</h2>
 
   <h3>Crear Usuario</h3>
   <ul>
@@ -179,6 +213,8 @@
   "statusCode": 200,
   "message": "User status changed successfully"
 }</code></pre>
+
+<h2>Endpoints de Usuario-Estado</h2>
 
 <h3>Obtener Estado de Usuario por ID</h3>
   <ul>
