@@ -16,6 +16,8 @@ import { AuthService } from './service/auth/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './infraestructure/auth/jwt.strategy';
+import { UserStatusService } from './service/user-status/user-status.service';
+import { UserStatusController } from './controller/user-status/user-status.controller';
 
 
 @Module({
@@ -42,7 +44,7 @@ import { JwtStrategy } from './infraestructure/auth/jwt.strategy';
       signOptions: { expiresIn: '30m' }
     })
   ],
-  controllers: [AppController, UserController, AuthController],
-  providers: [AppService, EnvConfigProvider, UserService, sequelizeProvider, AuthService, JwtStrategy],
+  controllers: [AppController, UserController, AuthController, UserStatusController],
+  providers: [AppService, EnvConfigProvider, UserService, sequelizeProvider, AuthService, JwtStrategy, UserStatusService],
 })
 export class AppModule { }
