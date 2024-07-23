@@ -21,10 +21,10 @@ export class CreateUserDto {
   @Length(1, 255)
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Length(8, 255)
-  password_hash: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // @Length(8, 255)
+  // password_hash?: string;
 
   @IsInt()
   @IsNotEmpty()
